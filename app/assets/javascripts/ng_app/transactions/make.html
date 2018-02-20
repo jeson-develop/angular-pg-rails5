@@ -1,0 +1,70 @@
+<div ng-controller="TransactionsController">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Username : <span class="label label-default">{{account.username}}</span></h3>
+            <hr></hr>
+        </div>
+    </div>
+    <div ng-controller='ErrorsController'>
+        <div ng-show="message['type']" class="alert" ng-class="message['type']" role="alert">
+            <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+            {{message['data']}}
+        </div>
+    </div>
+    <div ng-show='isReset' class="row">
+        <div class="col-md-2">
+            <a ng-click='back()' role="button">Back</a>
+        </div>
+        <div class="col-md-19">
+            <button class="btn btn-default" ng-click='makeDeposit()'>Deposit</button>
+            <button class="btn btn-default" ng-click='makeWithdraw()'>Withdraw</button>
+            <button class="btn btn-default" ng-click='makeTransfer()'>Transfer</button>
+        </div>
+    </div>
+    <div class="row">
+        <div ng-show='!isReset && isDeposit'>
+            <div class="col-md-4">
+                <form ng-submit='createTransaction(0)' >
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Amount</label>
+                        <input type="text" class="form-control" ng-model='transaction["amount"]' placeholder="Amount">
+                    </div>
+                    <button type="submit" class="btn btn-default">Deposit</button>
+                    <a class="btn btn-default" ng-click='reset()'>Cancel</a>
+                </form>
+            </div>
+        </div>
+
+        <div ng-show='!isReset && isWithdraw'>
+            <div class="col-md-4">
+                <form ng-submit='createTransaction(1)' >
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Amount</label>
+                        <input type="text" class="form-control" ng-model='transaction["amount"]' placeholder="Amount">
+                    </div>
+                    <button type="submit" class="btn btn-default">Withdraw</button>
+                    <a class="btn btn-default" ng-click='reset()'>Cancel</a>
+                </form>
+            </div>
+        </div>
+
+        <div ng-show='!isReset && isTransfer'>
+            <div class="col-md-4">
+                <form ng-submit='createTransaction(2)' >
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Amount</label>
+                        <input type="text" class="form-control" ng-model='transaction["amount"]' placeholder="Amount">
+                        <label for="">To</label>
+                        <select class="form-control" ng-model='transaction["creditor_id"]'>
+                            <option value="">Select Username</option>
+                            <option ng-repeat="c in accounts" value="{{c.id}}" ng-if="c.username != account.username">{{c.username}}</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-default">Transfer</button>
+                    <a class="btn btn-default" ng-click='reset()'>Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

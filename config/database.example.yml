@@ -1,0 +1,15 @@
+default: &default
+  adapter: postgresql
+  username: postgres
+  password: postgres
+  encoding: unicode
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *default
+  database: banking_development
+
+test:
+  <<: *default
+  database: banking_test
